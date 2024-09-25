@@ -12,14 +12,44 @@ const BookForm = ({ book, onSave, onBack }) => {
         }
     }, [book]);
 
-    const handleSubmit = (e) = {
+    const handleSubmit = (e) => {
         e.preventDefault();
         onSave({ id: book ? book.id : null, title, author });
     };
 
     return (
         <div>
-            <h1></h1>
+            <h1>{book ? 'Edit Book' : 'Create Book'}</h1>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Title:</label>
+                    <input 
+                    type="text" 
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    />
+                </div>
+                <div>
+                    <label>Author:</label>
+                    <input 
+                    type="text"
+                    value={author}
+                    onChange={(e) => setAuthor(e.target.value)}
+                    />
+                </div>
+                <button type="submit">Save</button>
+            </form>
+            <div className="button-container">
+                <button onClick={onBack}>Back to List</button>
+            </div>
         </div>
-    )
-}
+    );
+};
+
+BookForm.PropTypes = {
+    book: PropTypes.object,
+    onSave: PropTypes.func.isRequired,
+    onBack: PropTypes.func.isRequired,
+};
+
+export default BookForm;
